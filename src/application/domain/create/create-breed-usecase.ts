@@ -7,10 +7,10 @@ export default class CreateBreedUsecase implements CreateBreedRepository {
         private readonly database: DatabaseAdapter<Dog>
     ) {}
 
-   async  execute(name: string, variants?: string[]): Promise<boolean> {
+   async  execute(name: string, variants?: string[]): Promise<Dog | null> {
         const data: Partial<Dog> = {
             variants: variants ?? []
         }
-        return await this.database.create(name, data);
+        return await this.database.upsert(name, data);
     }
 }
