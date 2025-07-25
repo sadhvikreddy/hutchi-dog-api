@@ -11,11 +11,12 @@ export default class DatabaseAdapter {
         this.collection = db.collection(this.collectionName);
     }
 
-    async create(name: string): Promise<boolean> {
+    // add values
+    async create(name: string, data: any): Promise<boolean> {
         try {
             await this.collection.doc(name).set({
                 name,
-                [DatabaseAdapter.variantKey]: []
+                [DatabaseAdapter.variantKey]: data
             });
             return true;
         } catch(e){
@@ -47,9 +48,19 @@ export default class DatabaseAdapter {
         return data;
     }
 
-    // TODO: need to create models and interfaces
+    // TODO: need to create models and interfaces (add partial of model)
     async update(name: string, data: any) {
+        await this.collection.doc(name).set({
+            ...data
+        })
     }
 
-
+    async delete(name: string) {
+        try {
+            await this.collection.doc(name).delete()
+            return true;
+        } catch(e) {
+            return false
+        }
+    }
 }
