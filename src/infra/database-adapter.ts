@@ -80,7 +80,7 @@ export default class DatabaseAdapter<T extends BaseDocument> {
         return true
     }
 
-    async read(): Promise<Partial<T>[]> {
+    async read(): Promise<T[]> {
         const snapshot = await this.collection.get();
         const data: T[] =[]
         snapshot.forEach((doc) => {
