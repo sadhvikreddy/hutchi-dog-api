@@ -91,7 +91,7 @@ export default class DatabaseAdapter<T extends BaseDocument> {
         return data;
     }
 
-    async readOne(id: string): Promise<Partial<T> | null> {
+    async readOne(id: string): Promise<T | null> {
         const snapshot = await this.collection.doc(id).get();
         if(snapshot.exists) {
             const rawData = snapshot.data() as T;
