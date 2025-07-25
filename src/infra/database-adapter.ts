@@ -1,8 +1,6 @@
 import db from '@/main/setup/setup_db';
 
-export default class DatabaseAdapter {
-
-    static variantKey = 'variants'
+export default class DatabaseAdapter<T> {
 
     collection: FirebaseFirestore.CollectionReference
     constructor (
@@ -12,11 +10,11 @@ export default class DatabaseAdapter {
     }
 
     // add values
-    async create(name: string, data: any): Promise<boolean> {
+    async create(id: string, data: Partial<T>): Promise<boolean> {
         try {
-            await this.collection.doc(name).set({
-                name,
-                [DatabaseAdapter.variantKey]: data
+            await this.collection.doc(id).set({
+                id,
+                ...data
             });
             return true;
         } catch(e){
@@ -26,38 +24,42 @@ export default class DatabaseAdapter {
         }
     }
 
-    async read() {
+    async read(): Promise<Partial<T>[]> {
         const snapshot = await this.collection.get();
-        const data: Record<string, string[]> = {}
+        const data: T[] =[]
         snapshot.forEach((doc) => {
-            data[doc.id] = doc.data()[`${DatabaseAdapter.variantKey}`] ?? []
+            const record = doc.data() as T;
+            data.push(record)
         })
 
         return data;
     }
 
-    async readOne(name: string) {
-        const snapshot = await this.collection.doc(name).get();
-        const data: Record<string, string[]> = {}
+    async readOne(id: string): Promise<Partial<T> | null> {
+        const snapshot = await this.collection.doc(id).get();
         if(snapshot.exists) {
-            const rawData = snapshot.data();
-            if(rawData !== undefined) {
-                data[rawData.name] =  rawData[`${DatabaseAdapter.variantKey}`] ?? []
-            }
+            const rawData = snapshot.data() as T;
+            return rawData;
+        } else {
+            return null
         }
-        return data;
     }
 
     // TODO: need to create models and interfaces (add partial of model)
-    async update(name: string, data: any) {
-        await this.collection.doc(name).set({
-            ...data
-        })
+    async update(id: string, data: Partial<T>): Promise<boolean> {
+        try {
+            await this.collection.doc(id).set({
+                ...data
+            });
+            return true;
+        } catch(e) {
+            return false;
+        }
     }
 
-    async delete(name: string) {
+    async delete(id: string) {
         try {
-            await this.collection.doc(name).delete()
+            await this.collection.doc(id).delete()
             return true;
         } catch(e) {
             return false
