@@ -1,5 +1,6 @@
 import BaseDocument from '@/application/data/interfaces/db/BaseDocument';
 import db from '@/main/setup/setup_db';
+import handleTimestamps from '@/main/utils/handleTimestamps';
 
 export default class DatabaseAdapter<T extends BaseDocument> {
 
@@ -11,23 +12,24 @@ export default class DatabaseAdapter<T extends BaseDocument> {
     }
 
     // add values
-    async upsert(id: string, data: Partial<T>): Promise<T> {
-            const document = await this.collection.doc(id).get();
-            let result;
-            if(!document) {
-                result = await this.collection.doc(id).set({
-                    id,
-                    created_at: new Date(),
-                    ...data
-                });
-            } else {
-                result = await this.collection.doc(id).update({
-                    id,
-                    updated_at: new Date(),
-                    ...data
-                })
-            }
-            return result as unknown as T
+    async upsert(id: string, data: Partial<T>): Promise<T | null> {
+        const document = await this.collection.doc(id).get();
+        const oneRecord = document.data()
+        let result;
+        if(!oneRecord) {
+            result = await this.collection.doc(id).set({
+                id,
+                created_at: new Date(),
+                ...data
+            });
+        } else {
+            result = await this.collection.doc(id).update({
+                id,
+                updated_at: new Date(),
+                ...data
+            })
+        }
+        return await this.readOne(id);
     }
 
     async upsertMany(data: T[]): Promise<any> {
@@ -84,7 +86,7 @@ export default class DatabaseAdapter<T extends BaseDocument> {
         const snapshot = await this.collection.get();
         const data: T[] =[]
         snapshot.forEach((doc) => {
-            const record = doc.data() as T;
+            const record = handleTimestamps(doc.data()) as T;
             data.push(record)
         })
 
@@ -95,7 +97,8 @@ export default class DatabaseAdapter<T extends BaseDocument> {
         const snapshot = await this.collection.doc(id).get();
         if(snapshot.exists) {
             const rawData = snapshot.data() as T;
-            return rawData;
+
+            return handleTimestamps(rawData);
         } else {
             return null
         }
