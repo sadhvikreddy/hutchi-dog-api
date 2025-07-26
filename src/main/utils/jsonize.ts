@@ -1,3 +1,10 @@
 export function jsonize(protoObject: Object) {
-    return JSON.parse(JSON.stringify(protoObject))
+    if(protoObject === undefined || protoObject === null) {
+        return {}
+    }
+    try {
+        return JSON.parse(JSON.stringify(protoObject))
+    } catch(error) {
+        throw new Error("Not Valid Json")
+    }
 }

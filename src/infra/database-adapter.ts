@@ -78,12 +78,13 @@ export default class DatabaseAdapter<T extends BaseDocument> {
 
         await batch.commit();
 
-        // return actually status later.
-        return true
+        // returns snapshot of the list. 
+        // but, in real world application this would be read by many ids.
+        return await this.read();
     }
 
     async read(): Promise<T[]> {
-        const snapshot = await this.collection.get();
+        const snapshot = await this.collection.orderBy("name").get();
         const data: T[] =[]
         snapshot.forEach((doc) => {
             const record = handleTimestamps(doc.data()) as T;
@@ -104,8 +105,14 @@ export default class DatabaseAdapter<T extends BaseDocument> {
         }
     }
 
-    async delete(id: string) {
+    async deleteOne(id: string) {
         await this.collection.doc(id).delete()
+        return true;
+    }
+
+    async deleteMany(ids: string[]) {
+        const promiseWrappers = ids.map(id => this.collection.doc(id).delete())
+        await Promise.all(promiseWrappers);
         return true;
     }
 }

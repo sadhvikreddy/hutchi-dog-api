@@ -7,15 +7,22 @@ export const restAPIAdapter = <T>(controller: Controller<T>): (req: Request, res
     return async (req: Request, res: Response, next: NextFunction) => {
         const { body, params, query } = req;
 
-        const payload: RequestPayload = {
-            body: jsonize(body),
-            params: jsonize(params),
-            query: jsonize(query)
-        }
-        const response = await controller.validateAndRun(payload);
+        try {
+            
+            const payload: RequestPayload = {
+                body: jsonize(body),
+                params: jsonize(params),
+                query: jsonize(query)
+            }
+            const response = await controller.validateAndRun(payload);
 
-        res.status(200).json({
-            response
-        })
+            res.status(200).json({
+                response
+            })
+        } catch(error) {
+            res.status(500).json({
+                response: "Internal Server"
+            })
+        }
     }
 }
