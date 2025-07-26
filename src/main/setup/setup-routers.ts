@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { createBreedRouter, CreateManyByJsonRouter } from '../routers';
+import { createBreedRouter, createManyByJsonRouter } from '../routers';
 import bodyParser from 'body-parser';
 
 // maybe todo: pure function maybe.
@@ -9,5 +9,5 @@ export const setupRouters = async (app: Express): Promise<void> => {
 
     // Routes
     app.put('/dog-breed/:name', createBreedRouter())
-    app.post('/json', CreateManyByJsonRouter())
+    app.post('/json', createManyByJsonRouter())
 }

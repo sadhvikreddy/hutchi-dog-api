@@ -4,7 +4,7 @@ import CreateManyByJSONUsecase from "@/application/domain/create/create-many-by-
 import DatabaseAdapter from "@/infra/database-adapter";
 import { restAPIAdapter } from "@/infra/rest-api-adapter";
 
-export function CreateManyByJsonRouter() {
+export function createManyByJsonRouter() {
     const database = new DatabaseAdapter<Dog>('dogs');
     const usecase = new CreateManyByJSONUsecase(database);
     const controller = new CreateManyByJsonController(usecase);
