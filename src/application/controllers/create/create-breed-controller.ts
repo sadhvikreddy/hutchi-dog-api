@@ -3,6 +3,7 @@ import { CreateBreedRepository } from "@/application/data/contracts/create/creat
 import { RequestPayload } from "@/application/data/interfaces/core/RequestPayload";
 import z from "zod";
 import { CreateBreedRequestInput, createBreedRequestInputSchema } from "@/application/data/requests/create-breed-request-input";
+import { parseArray } from "@/main/utils/parseArray";
 
 export default class CreateBreedController extends Controller<CreateBreedRequestInput> {
     constructor(
@@ -18,21 +19,9 @@ export default class CreateBreedController extends Controller<CreateBreedRequest
     }
 
     buildValidator(payload: RequestPayload): CreateBreedRequestInput {
-        let array;
-        let toArray;
-        const raw_body = payload?.body?.variants ?? ''
-        const tryArrayParse = Array(raw_body);
-        if(Array.isArray(tryArrayParse)) {
-            array = tryArrayParse;
-        } else {
-            array = raw_body.split(',') ?? ''
-            if(!Array.isArray(array)) {
-                array = [`${array}`]
-            }
-        }
         let toReturn: CreateBreedRequestInput = {
             name: payload.params?.name ?? '',
-            variants: array ?? []
+            variants: parseArray(payload.body.variants)
         }
 
         console.log(toReturn);
