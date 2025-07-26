@@ -24,8 +24,6 @@ export default class CreateBreedController extends Controller<CreateBreedRequest
             variants: parseArray(payload.body.variants)
         }
 
-        console.log(toReturn);
-
         try {
             toReturn = createBreedRequestInputSchema.parse(toReturn);
         } catch (error) {
