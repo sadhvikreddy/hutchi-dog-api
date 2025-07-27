@@ -13,6 +13,7 @@ export default class DatabaseAdapter<T extends BaseDocument> {
 
     // add values
     async upsert(id: string, data: Partial<T>): Promise<T | null> {
+        id = id.toLowerCase();
         const document = await this.collection.doc(id).get();
         const oneRecord = document.data()
         let result;
@@ -69,9 +70,10 @@ export default class DatabaseAdapter<T extends BaseDocument> {
         const batch = db.batch();
         for(const entry of toUpsert) {
             const { id, ...rest } = entry;
-            const ref = this.collection.doc(id);
+            const lowercaseId = id.toLowerCase()
+            const ref = this.collection.doc(lowercaseId);
             batch.set(ref, {
-                id,
+                id: lowercaseId,
                 ...rest
             })
         }
@@ -84,13 +86,12 @@ export default class DatabaseAdapter<T extends BaseDocument> {
     }
 
     async read(): Promise<T[]> {
-        const snapshot = await this.collection.orderBy("name").get();
+        const snapshot = await this.collection.orderBy('id', 'asc').get();
         const data: T[] =[]
         snapshot.forEach((doc) => {
             const record = handleTimestamps(doc.data()) as T;
             data.push(record)
         })
-
         return data;
     }
 

@@ -9,6 +9,7 @@ export default class UpsertBreedUsecase implements UpsertBreedRepository {
 
     async execute(name: string, variants?: string[]): Promise<Dog | null> {
         const data: Partial<Dog> = {
+            name,
             variants: variants ?? []
         }
         return await this.database.upsert(name, data);
