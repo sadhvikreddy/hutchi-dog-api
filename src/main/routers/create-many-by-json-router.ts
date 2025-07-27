@@ -1,12 +1,10 @@
 import CreateManyByJsonController from "@/application/controllers/create/create-many-by-json-controller";
-import Dog from "@/application/data/interfaces/db/dog";
 import CreateManyByJSONUsecase from "@/application/domain/create/create-many-by-json-usecase";
-import DatabaseAdapter from "@/infra/database-adapter";
 import { restAPIAdapter } from "@/infra/rest-api-adapter";
+import { dogDatabaseFactory } from "../setup/database_factories";
 
 export function createManyByJsonRouter() {
-    const database = new DatabaseAdapter<Dog>('dogs');
-    const usecase = new CreateManyByJSONUsecase(database);
+    const usecase = new CreateManyByJSONUsecase(dogDatabaseFactory());
     const controller = new CreateManyByJsonController(usecase);
 
     return restAPIAdapter(controller);
