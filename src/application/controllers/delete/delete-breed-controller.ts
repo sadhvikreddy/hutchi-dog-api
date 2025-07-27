@@ -1,21 +1,20 @@
-import Controller from "@/application/data/contracts/controller";
+import Controller from "@/infra/controller";
 import { DeleteBreedRepository } from "@/application/data/contracts/delete/delete-breed-repository";
 import { RequestPayload } from "@/application/data/interfaces/core/RequestPayload";
 import z from "zod";
 
-export class DeleteBreedController extends Controller {
+export class DeleteBreedController extends Controller<string> {
     constructor(
         private readonly usecase: DeleteBreedRepository
     ) {
         super();
     }
 
-    async run(payload: RequestPayload) {
-        const { params } = payload;
-        return await this.usecase.execute(params);
+    async run(input: string) {
+        return await this.usecase.execute(input);
     }
 
-    buildValidator(payload: RequestPayload): void {
+    buildValidator(payload: RequestPayload): string {
         let { params } = payload;
 
         const schema = z.object({
@@ -24,12 +23,14 @@ export class DeleteBreedController extends Controller {
 
         try {
             params = schema.parse(params)
-        } catch(error) {
-            if(error instanceof z.ZodError) {
+        } catch (error) {
+            if (error instanceof z.ZodError) {
                 // throw 400
             }
 
             // throw 500
         }
+
+        return params.name;
     }
 }
