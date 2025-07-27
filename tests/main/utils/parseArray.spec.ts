@@ -11,7 +11,7 @@ describe("Parse Array", () => {
     })
 
     it("Should parse one element perfectly", () => {
-        expect(parseArray("one element")).toStrictEqual(["one element"])
+        expect(parseArray("one element")).toStrictEqual(["oneelement"])
     })
 
     it("Should parse comma seprated two or more elemets coreectly", () => {

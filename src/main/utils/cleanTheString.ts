@@ -1,12 +1,9 @@
 export function cleanTheString(str: string) {
-    const removeSquareBrackets1 = str.replace('[', '')
-    const removeSquareBrackets2 = removeSquareBrackets1.replace(']', '')
-    const removecomma = removeSquareBrackets2.replace(',', '')
+    const removeSquareBrackets1 = str.replaceAll('[', '')
+    const removeSquareBrackets2 = removeSquareBrackets1.replaceAll(']', '')
+    const removecomma = removeSquareBrackets2.replaceAll(',', '')
     const removeqbsp = removecomma.replaceAll('\"', '')
-    if(removeqbsp.startsWith(" ") || removeqbsp.endsWith(" ")) {
-        const removedWhitespaces = removeqbsp.replaceAll(" ", '')
-        return removedWhitespaces
-    }
+    const removeWhitespaces = removeqbsp.replace(/\s+/g, '');
 
-    return removeqbsp;
+    return removeWhitespaces;
 }
