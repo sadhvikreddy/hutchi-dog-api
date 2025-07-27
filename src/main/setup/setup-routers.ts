@@ -1,9 +1,14 @@
 import { Express } from 'express';
-import { upsertBreedRouter, createManyByJsonRouter, createVariantRouter } from '../routers';
+import { 
+    upsertBreedRouter, 
+    createManyByJsonRouter, 
+    createVariantRouter,
+    deleteBreedRouter,
+    deleteVariantRouter,
+    readAllRouter,
+    readRouter
+} from '../routers';
 import bodyParser from 'body-parser';
-import { deleteBreedRouter } from '../routers/delete-breed-router';
-import { deleteVariantRouter } from '../routers/delete-variant-router';
-import { readAllRouter } from '../routers/read-all-router';
 
 // maybe todo: pure function maybe.
 export const setupRouters = async (app: Express): Promise<void> => {
@@ -12,8 +17,8 @@ export const setupRouters = async (app: Express): Promise<void> => {
 
     // Routes
     // create and upsert
-    app.put('/upsert/dog-breed/:name', upsertBreedRouter())
     app.post('/json', createManyByJsonRouter())
+    app.put('/upsert/dog-breed/:name', upsertBreedRouter())
     app.put('/create/dog-breed/:name/variant/:variant', createVariantRouter())
 
     // delete
@@ -22,4 +27,6 @@ export const setupRouters = async (app: Express): Promise<void> => {
 
     // read
     app.get('/all', readAllRouter())
+
+    app.get('/dog-breed/:name', readRouter())
 }
