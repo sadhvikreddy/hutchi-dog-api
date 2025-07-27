@@ -11,10 +11,10 @@ export const setupRouters = async (app: Express): Promise<void> => {
     // Routes
 
     // create and upsert
-    app.put('/dog-breed/:name', upsertBreedRouter())
+    app.put('/upsert/dog-breed/:name', upsertBreedRouter())
     app.post('/json', createManyByJsonRouter())
-    app.put('/dog/:name/variant/:variant', createVariantRouter())
+    app.put('/create/dog/:name/variant/:variant', createVariantRouter())
 
     // delete
-    app.delete('/dog-breed/:name', deleteBreedRouter())
+    app.delete('/delete/dog-breed/:name', deleteBreedRouter())
 }

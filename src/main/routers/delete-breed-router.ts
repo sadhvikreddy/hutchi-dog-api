@@ -7,5 +7,5 @@ export function deleteBreedRouter() {
     const usecase = new DeleteBreedUsecase(dogDatabaseFactory())
     const controller = new DeleteBreedController(usecase);
 
-    return restAPIAdapter(controller);
+    return restAPIAdapter<string>(controller);
 }
