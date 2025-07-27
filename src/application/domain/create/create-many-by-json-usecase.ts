@@ -1,6 +1,8 @@
 import CreateManyByJSONRepository from "@/application/data/contracts/create/create-many-by-json-repository";
 import Dog from "@/application/data/interfaces/db/dog";
 import DatabaseAdapter from "@/infra/database-adapter";
+import { cleanTheString } from "@/main/utils/cleanTheString";
+import { parseArray } from "@/main/utils/parseArray";
 
 export default class CreateManyByJSONUsecase implements CreateManyByJSONRepository {
     constructor(
@@ -12,9 +14,9 @@ export default class CreateManyByJSONUsecase implements CreateManyByJSONReposito
 
         const dogs: Dog[] = keys.map(key => {
             const dog: Dog = {
-                id: key,
-                name: key,
-                variants: json[key] ?? [] 
+                id: cleanTheString(key),
+                name: cleanTheString(key),
+                variants: parseArray(json[key]) ?? [] 
             }
 
             return dog
