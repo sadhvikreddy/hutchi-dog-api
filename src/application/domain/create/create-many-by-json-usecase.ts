@@ -9,7 +9,7 @@ export default class CreateManyByJSONUsecase implements CreateManyByJSONReposito
         private readonly database: DatabaseAdapter<Dog>
     ) {}
 
-    async execute(json: Record<string, string[]>, reset?: boolean): Promise<boolean> {
+    async execute(json: Record<string, string[]>, reset?: boolean): Promise<Dog[]> {
         const keys = Object.keys(json);
 
         const dogs: Dog[] = keys.map(key => {
