@@ -1,0 +1,1 @@
+export const DOGS_COLLECTION_NAME = 'dogs';
