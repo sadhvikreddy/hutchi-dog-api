@@ -1,8 +1,8 @@
 import Controller from "@/infra/controller";
-import ReadAllRepository from "@/application/data/contracts/read/read-all-repository";
-export default class ReadAllController extends Controller<void> {
+import ReadJsonRepository from "@/application/data/contracts/read/read-json-repository";
+export default class ReadJsonController extends Controller<void> {
     constructor(
-        private readonly usecase: ReadAllRepository
+        private readonly usecase: ReadJsonRepository
     ) {
         super()
     }

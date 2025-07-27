@@ -16,9 +16,7 @@ export const restAPIAdapter = <T>(controller: Controller<T>): (req: Request, res
             }
             const response = await controller.validateAndRun(payload);
 
-            res.status(200).json({
-                response
-            })
+            res.status(200).json(response)
         } catch(error) {
             res.status(500).json({
                 response: "Internal Server"

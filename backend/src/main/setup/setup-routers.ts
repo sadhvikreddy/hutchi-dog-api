@@ -9,6 +9,7 @@ import {
     readRouter
 } from '../routers';
 import bodyParser from 'body-parser';
+import { readJsonRouter } from '../routers/read-json-router';
 
 // maybe todo: pure function maybe.
 export const setupRouters = async (app: Express): Promise<void> => {
@@ -27,6 +28,7 @@ export const setupRouters = async (app: Express): Promise<void> => {
 
     // read
     app.get('/all', readAllRouter())
-
     app.get('/dog-breed/:name', readRouter())
+
+    app.get('/', readJsonRouter())
 }
