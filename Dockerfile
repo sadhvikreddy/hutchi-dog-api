@@ -9,4 +9,4 @@ COPY ./firebase-auth.json ./
 RUN npm install --omit=dev
 RUN npm run build
 EXPOSE 9999
-CMD [ "npm", "run", "start" ]
+CMD [ "node", "dist/server.js" ]

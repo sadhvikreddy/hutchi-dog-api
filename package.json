@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "docker:build": "docker build -t hutchi-server .",
-        "start:server": "docker run -p 9999:9999 hutchi-server"
+        "docker:build": "docker build -t hutchi-dog-server .",
+        "start:server": "docker run -p 9999:9999 hutchi-dog-server"
     }
 }
