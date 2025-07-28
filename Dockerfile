@@ -5,7 +5,7 @@ WORKDIR /app
 COPY backend/package.json ./
 COPY backend/tsconfig*.json ./
 COPY backend/src/ ./src
-COPY backend/etc/secrets/firebase-auth.json ./etc/secrets/
+COPY ./etc/secrets/firebase-auth.json ./
 RUN npm install --omit=dev
 RUN npm run build
 EXPOSE 9999

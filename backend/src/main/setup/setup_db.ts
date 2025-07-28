@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase-admin/app';
 import admin from 'firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore'
 
-const serviceAccont = require("../../../etc/secrets/firebase-auth.json")
+const serviceAccont = require("../../../firebase-auth.json")
 
 initializeApp({
     credential: admin.credential.cert(serviceAccont)
