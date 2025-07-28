@@ -6,7 +6,10 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "start:dev": "tsx --watch src/server.ts",
-    "start:test": "vitest"
+    "start:test": "vitest -- watch",
+
+    "build:docker": "docker build -t hutchi-dog-server .",
+    "start:docker": "docker run -p 9999:9999 hutchi-dog-server"
   },
   "repository": {
     "type": "git",

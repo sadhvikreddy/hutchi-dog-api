@@ -40,7 +40,7 @@ export default class DatabaseAdapter<T extends BaseDocument> {
 
         const results = await Promise.all(promiseWrappers);
 
-        const toUpsert = [];
+        const toUpsert: any[] = [];
     
         for(let i = 0; i < results.length; i++) {
             const entry = data[i];
