@@ -18,6 +18,7 @@
     "@heroui/listbox": "2.3.22",
     "@heroui/navbar": "2.2.21",
     "@heroui/snippet": "2.2.24",
+    "@heroui/spinner": "^2.2.21",
     "@heroui/switch": "2.2.21",
     "@heroui/system": "2.4.19",
     "@heroui/theme": "2.4.19",

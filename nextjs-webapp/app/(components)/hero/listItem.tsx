@@ -1,24 +1,18 @@
+"use client"
+
 import { fetchMetadata } from "@/app/actions/fetch-metadata";
 import { extractMeta } from "@/app/utils/extract-meta";
 import Dog from "@/models/dog";
-import { Card } from '@heroui/card'
+import DogWithMeta from "@/models/dog-with-meta";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { Spinner } from "@heroui/spinner"
+import { capitalizeFirstLetter } from "@/app/utils/capitalizeFirstLetter";
 
 
-export default async function ListItem({dog}: {dog: Dog}) {
-    const meta = await fetchMetadata(`${dog.name}`)
-    const dogWithMeta = extractMeta(dog, meta)
+export default function ListItem({ dog }: { dog: Dog }) {
 
-    return <Card
-    className="p-4 overflow-scroll">
-        <div className="flex flex-row items-center justify-between">
-            <p>{dogWithMeta.name.toUpperCase()}</p>
-            <Image 
-            src={dogWithMeta.imageUrl || "/placeholder-image/image.png"}
-            alt={""}
-            width={200}
-            height={200}
-            />
-        </div>
-    </Card>
+    return <div className="flex flex-col items-center justify-between ">
+        <p className="font-extralight">{capitalizeFirstLetter(dog.name)}</p>
+    </div>
 }
