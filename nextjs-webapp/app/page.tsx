@@ -1,14 +1,15 @@
-import Dog from "@/models/dog";
 import { Suspense } from "react";
-import fetchData from "./actions/dogs-api/fetch-data";
 import MainList from "./(components)/hero/main-list";
+import Menubar from "./(components)/menu-bar/menu-bar";
 
-export default async function Home() {
-  const data: Dog[] = await fetchData();
+export default function Home() {
   return (
     <>
       <Suspense>
-        <MainList data={data} />
+        <div className="fixed top-20 left-10">
+          <Menubar />
+        </div>
+        <MainList />
       </Suspense>
     </>
   );
