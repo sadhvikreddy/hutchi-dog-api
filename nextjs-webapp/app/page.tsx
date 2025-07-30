@@ -1,15 +1,12 @@
 import { Suspense } from "react";
-import MainList from "./(components)/hero/main-list";
-import Menubar from "./(components)/menu-bar/menu-bar";
+import HeroList from "./(components)/hero/hero-list";
+import Loading from "./loading";
 
 export default function Home() {
   return (
     <>
-      <Suspense>
-        <div className="fixed top-20 left-10">
-          <Menubar />
-        </div>
-        <MainList />
+      <Suspense fallback={<Loading />}>
+        <HeroList />
       </Suspense>
     </>
   );
