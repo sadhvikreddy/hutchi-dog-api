@@ -4,12 +4,12 @@ import { useState } from "react"
 import { Button } from "@heroui/button";
 import { Drawer, DrawerContent, DrawerHeader, Input, useDisclosure } from "@heroui/react"
 import { useDogStore } from "@/store/dogStore";
+import Image from "next/image";
+import AddBreed from "./items/add-breed";
 
 export default function Menubar() {
-    // ABD -> Add Breed Drawer
-    const {isOpen:isABDOpen, onOpen: onABDOpen, onOpenChange: onABDOpenChange} = useDisclosure();
-    const [jSONViewerVisibility, setJSONViewerVisibility] = useState(false);
-    const [breedName, setBreedName] = useState('');
+    const {isOpen:isAJDOpen, onOpen: onAJDOpen, onOpenChange: onAJDOpenChange} = useDisclosure();
+
     const { toJson } = useDogStore()
 
     const downloadFile =() => {   
@@ -24,35 +24,36 @@ export default function Menubar() {
     return (
         <>
             <div className="">
+                <AddBreed />
                 <Button
                     color="primary"
-                    variant="ghost"
-                    onPress={ () => onABDOpen()}
+                    variant="light"
+                    onPress={ () => onAJDOpen()}
                 >
-                    <div>Add a breed</div>
+                    <div>JSON </div>
                 </Button>
-                <div>Upload a JSON</div>
                 <Button
                     color="primary"
-                    variant="ghost"
+                    variant="light"
                     onPress={downloadFile}
                 >
                     <div>Download List as JSON</div>
                 </Button>
             </div>
-            <Drawer isOpen={isABDOpen} onOpenChange={onABDOpenChange}>
+
+
+            <Drawer 
+                isOpen={isAJDOpen} 
+                onOpenChange={onAJDOpenChange}
+                size="full"
+                placement="bottom"
+
+            >
                 <DrawerHeader>
-                    <p className="text-xl">Add a New Dog Breed</p>
+                    <p className="text-xl">JSON</p>
                 </DrawerHeader>
                 <DrawerContent>
-                    <Input
-                        onChange={(e) => setBreedName(e.target.value)}
-                    />
-                    <div className="h-10"/>
-                    <Button 
-                    >
-                        <p>Done</p>
-                    </Button>
+                    JSON
                 </DrawerContent>
             </Drawer>
         </>

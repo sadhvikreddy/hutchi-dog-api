@@ -32,9 +32,9 @@ export default function MainList() {
         if(entry.variants.length === 0) {
           return (
             <Card
-            shadow="sm"
-            radius="none"
-            key={entry.id} className="m-2 p-4 rounded-tl-[255px_15px] rounded-tr-[15px_255px] rounded-br-[225px_15px] rounded-bl-[15px_255px]">
+            shadow="none"
+            radius="sm"
+            key={entry.id} className="m-2 p-4 bg-trasparent border-1.5 border-indigo-800">
               <ListItem dog={entry} />
             </Card>
           )
@@ -43,8 +43,9 @@ export default function MainList() {
           return (
           <Card 
             key={entry.id} 
-            className="m-2 p-4"
-            radius="none" 
+            className="m-2 p-4 bg-transparent border-1 border-amber-50"
+            shadow="none"
+            radius="sm"
             >
             <p className="text-xl font-bold">Family of {capitalizeFirstLetter(entry.name)}'s</p>
             <div className="m-2 p-4">
@@ -56,7 +57,7 @@ export default function MainList() {
                 created_at: entry.created_at,
                 updated_at: entry.updated_at
               }
-              return  <Card key={newDog.id} radius="none" className="m-2 p-4"> <ListItem key={newDog.id} dog={newDog} /></Card>
+              return  <Card key={newDog.id} radius="none" className="m-2"> <ListItem key={newDog.id} dog={newDog} /></Card>
             
           })}  </div></Card>
         )}
