@@ -7,6 +7,22 @@ import { Providers } from "./providers";
 import Menubar from "./(components)/menu-bar/menu-bar";
 
 export const metadata: Metadata = {
+  title: "Dog JSON Viewer",
+  description: "The app allows you to upload, download and edit an JSON which has dog breeds.",
+  authors: {
+    name:"Sadhvik Puchalapalli",
+  },
+
+  openGraph: {
+    title: "Dog JSON Viewer",
+    description: "The app allows you to upload, download and edit an JSON which has dog breeds.",
+    url: 'beautiful-dog-json-viewer.vercel.app',
+    siteName: "Beautiful Dog JSON Viewer",
+    type: 'website',
+    images: [{
+      url: "https://images.unsplash.com/photo-1535930891776-0c2dfb7fda1a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    }]
+  }
 };
 
 export const viewport: Viewport = {
@@ -54,7 +70,13 @@ export default function RootLayout({
               alt="beagle background"
               width={300}
               height={300}
-              
+              />
+                <Image
+              className="fixed top-5 left-5"
+              src={'/logo/logo.png'}
+              alt="beagle background"
+              width={50}
+              height={50}
               />
                <Menubar />
               {children}
