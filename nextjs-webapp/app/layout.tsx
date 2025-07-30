@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
+import  Image from "next/image";
 
 import { Providers } from "./providers";
 
@@ -30,6 +31,21 @@ export default function RootLayout({
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col h-screen">
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
+              <Image
+              className="fixed h-screen w-screen top-0 left-0 "
+              src={'/backgrounds/image.png'}
+              alt=""
+              width={300}
+              height={300}
+              />
+              <Image
+              className="fixed bottom-0 right-0 "
+              src={'/backgrounds/beagle.png'}
+              alt="beagle background"
+              width={300}
+              height={300}
+              
+              />
               {children}
             </main>
           </div>
