@@ -1,7 +1,7 @@
 import createData from '@/app/actions/dogs-api/create-data';
 import deleteData from '@/app/actions/dogs-api/delete-data';
 import fetchData from '@/app/actions/dogs-api/read-data'
-import { deleteVariantData } from '@/app/actions/dogs-api/update-data';
+import { addVariantData, deleteVariantData } from '@/app/actions/dogs-api/update-data';
 import dogToJson from '@/app/utils/dogToJson';
 import Dog from '@/models/dog'
 import { create } from 'zustand'
@@ -19,6 +19,7 @@ type Action = {
     updateDog: (Dog: Dog) => void
 
     addDogToRemote: (name: string, variants?: string[]) => Promise<boolean>
+    updateDogWithVariant: (name: string, variant: string) => Promise<boolean>
     deleteDogFROMRemote: (name: string) => Promise<boolean>
 }
 
@@ -66,9 +67,16 @@ export const useDogStore = create<State & Action>((set, get) => ({
                 return false
             }
         },
-
+        updateDogWithVariant: async (name: string, variant: string) => {
+            const response = await addVariantData(name, variant);
+            if(response) {
+                const { updateDog } = get()
+                updateDog(response)
+                return true;
+            }
+            return false
+        },
         deleteDogFROMRemote: async (id: string) => {
-            console.log(id);
             const splitted = id.split('_');
             if(splitted.length === 2) {
                 const name = splitted[1]

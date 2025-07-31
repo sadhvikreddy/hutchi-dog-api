@@ -1,8 +1,7 @@
 "use client"
 
 import Dog from "@/models/dog";
-import { Card } from "@heroui/card";
-import ListItem from "./listItem";
+import { ListItem } from "./listItem";
 import { capitalizeFirstLetter } from "@/app/utils/capitalizeFirstLetter";
 import { useDogStore } from "@/store/dogStore";
 import { useEffect, useState } from "react";
@@ -17,6 +16,7 @@ export default function HeroList() {
     const get = async () => {
       setLoading(true)
       await populate()
+      console.log(dogs)
       setLoading(false)
     }
 
@@ -54,7 +54,7 @@ export default function HeroList() {
                   }
                   return (
                     <DogCard key={newDog.id}>
-                      <ListItem key={newDog.id} dog={newDog} />
+                      <ListItem key={newDog.id} dog={newDog} type="variant" />
                     </DogCard>
                   );
                 })}

@@ -5,7 +5,7 @@ export default async function createData(name: string, variants?: string[]) {
 
     const req = await fetch(uri, {
         method: "PUT",
-        body: JSON.stringify({variants})
+        body: JSON.stringify(variants)
     })
     return req.json();
 }

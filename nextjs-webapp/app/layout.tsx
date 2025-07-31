@@ -49,28 +49,20 @@ export default function RootLayout({
           <div className="relative flex flex-col h-screen">
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
               <Image
-              className="fixed h-screen w-screen top-0 left-0 -z-10"
-              src={'/backgrounds/image.png'}
-              alt=""
-              width={300}
-              height={300}
+                className="fixed h-screen w-screen top-0 left-0 -z-10 opacity-50"
+                src={'/backgrounds/image.png'}
+                alt=""
+                width={300}
+                height={300}
               />
               <Image
-              className="fixed -bottom-20 left-0 opacity-30"
+              className="fixed -bottom-20 left-0 opacity-5"
               src={'/backgrounds/beagle.png'}
               alt="beagle background"
               objectFit="cover"
               width={300}
               height={300}
               
-              />
-
-              <Image
-              className="fixed bottom-0 right-0 opacity-30"
-              src={'/backgrounds/germans.png'}
-              alt="beagle background"
-              width={300}
-              height={300}
               />
                 <Image
               className="fixed top-5 left-5"
