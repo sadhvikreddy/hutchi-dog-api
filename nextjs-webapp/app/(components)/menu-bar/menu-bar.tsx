@@ -11,7 +11,7 @@ export default function Menubar() {
     return (
         <>
             <div className="flex flex-col gap-2 justify-self-center">
-                <div className="flex flex-row gap-5">  
+                <div className="flex flex-col md:flex md:flex-row gap-5">  
                 <AddBreed />
                 <DownloadFileButton />
             </div>

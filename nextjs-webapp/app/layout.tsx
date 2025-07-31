@@ -59,6 +59,7 @@ export default function RootLayout({
               className="fixed -bottom-20 left-0 opacity-30"
               src={'/backgrounds/beagle.png'}
               alt="beagle background"
+              objectFit="cover"
               width={300}
               height={300}
               

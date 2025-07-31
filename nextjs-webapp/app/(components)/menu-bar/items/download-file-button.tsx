@@ -2,9 +2,9 @@ import { useDogStore } from "@/store/dogStore";
 import PrimaryButton from "../../buttons/primary-button";
 
 export default function DownloadFileButton() {
-        const { toJson } = useDogStore()
+    const { toJson } = useDogStore()
 
-    const downloadFile =() => {   
+    const downloadFile = () => {
         const blob = new Blob([toJson()], { type: 'text/json' })
         const a = document.createElement('a');
         a.download = `dogs-${new Date().toISOString().replace(".", '-')}.json`
@@ -13,10 +13,13 @@ export default function DownloadFileButton() {
         a.remove()
     }
 
-        return (
-            <>
-                <PrimaryButton onPress={downloadFile} label="Export As JSON" />
-            </>
-        );
+    return (
+        <>
+            <PrimaryButton
+                tooltipText="Downlad the changes in database as a JSON file."
+                onPress={downloadFile} label="Export As JSON"
+            />
+        </>
+    );
 
 }

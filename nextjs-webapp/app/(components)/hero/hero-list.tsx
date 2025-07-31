@@ -27,9 +27,9 @@ export default function HeroList() {
     return <Loading />
   }
 
-    return <div className="w-1/2 justify-self-center flex flex-col md:grid-cols-2 g-4">
+    return <div className="w-screen md:w-1/2 justify-self-center flex flex-col">
       <div>
-        <p className="text-2xl font-bold pb-5 z-50">Dogs Found in Remote JSON</p>
+        <p className="text-xl m-4 md:text-2xl font-bold pb-5 z-50">Dogs Found in Remote JSON</p>
       </div>
       {dogs.map((entry: Dog) => {
         if (entry.variants.length === 0) {
@@ -42,8 +42,8 @@ export default function HeroList() {
         else {
           return (
             <DogCard key={entry.id}>
-              <p className="text-xl font-md">Family of {capitalizeFirstLetter(entry.name)}'s</p>
-              <div className="m-2 p-4">
+              <p className="text-lg md:text-xl font-md">Family of {capitalizeFirstLetter(entry.name)}'s</p>
+              <div className="py-4 md:m-2 md:p-4">
                 {entry.variants.map(variant => {
                   const newDog: Dog = {
                     id: variant + "_" + entry.name,
