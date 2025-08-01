@@ -7,6 +7,8 @@ import { useDogStore } from "@/store/dogStore";
 import { useEffect, useState } from "react";
 import DogCard from "./dog-card";
 import Loading from "@/app/loading";
+import AnimationWrapper from "./animation-wrapper";
+import lesserOf from "@/app/utils/lesserOf";
 
 export default function HeroList() {
   const [loading, setLoading] = useState(true);
@@ -31,17 +33,29 @@ export default function HeroList() {
       <div>
         <p className="text-xl m-4 md:text-2xl font-bold pb-5 z-50">Dogs Found in Remote JSON</p>
       </div>
-      {dogs.map((entry: Dog) => {
+      {dogs.map((entry: Dog, index) => {
+        const delay = lesserOf((0.01 +(index/10)), 0.30)
         if (entry.variants.length === 0) {
           return (
-            <DogCard key={entry.id}>
-              <ListItem dog={entry} />
-            </DogCard>
+            <AnimationWrapper
+              delay={delay}
+              key={entry.id}
+              id={entry.id}
+            >
+              <DogCard>
+                <ListItem dog={entry} />
+              </DogCard>
+            </AnimationWrapper>
           )
         }
         else {
           return (
-            <DogCard key={entry.id}>
+            <AnimationWrapper
+              key={entry.id}
+              delay={delay}
+              id={entry.id}
+            >
+            <DogCard >
               <p className="text-lg md:text-xl font-md">Family of {capitalizeFirstLetter(entry.name)}'s</p>
               <div className="py-4 md:m-2 md:p-4">
                 {entry.variants.map(variant => {
@@ -54,12 +68,13 @@ export default function HeroList() {
                   }
                   return (
                     <DogCard key={newDog.id}>
-                      <ListItem key={newDog.id} dog={newDog} type="variant" />
+                      <ListItem dog={newDog} type="variant" />
                     </DogCard>
                   );
                 })}
               </div>
             </DogCard>
+            </AnimationWrapper>
           )
         }
       })}

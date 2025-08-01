@@ -91,7 +91,7 @@ export default function AddBreed() {
                                     </div>
 
                                     <div>
-                                        {variants.map((v) => <DogCard ><ListItemUI onVariantAdd={null} name={v} onDelete={(e) => setVariants(prevState => removeElementFromArray(prevState, v))} /></DogCard>)}
+                                        {variants.map((v) => <DogCard key={v} ><ListItemUI onVariantAdd={null} name={v} onDelete={(e) => setVariants(prevState => removeElementFromArray(prevState, v))} /></DogCard>)}
                                     </div>
                                 </div>
                                 }
