@@ -8,37 +8,27 @@ import { addToast } from "@heroui/toast";
 import SecondaryButton from "../buttons/secondary-button";
 import { useDisclosure } from "@heroui/react";
 import AddVariant from "./add-variant";
+import successToast from "../notifications/success-toast";
+import failedToast from "../notifications/failed-toast";
 
 
 export function ListItem({ dog, type }: { dog: Dog, type?: "variant" }) {
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
     const { deleteDogFROMRemote, } = useDogStore()
 
+    const familyName = dog.id.split('_').length === 1 ? dog.id : dog.id.split('_')[1]
+
     return <>
         <ListItemUI
             name={dog.name}
             onDelete={async () => {
-                const added = await deleteDogFROMRemote(dog.id);
-                if (added) {
-                    addToast({
-                        title: "BOW! That Worked!",
-                        description: `Deleted ${dog.name} from JSON.`,
-                        color: 'success',
-
-                    });
-                } else {
-                    addToast({
-                        title: "Oops, something failed while saving.",
-                        description: ` Please try again`,
-                        color: 'danger',
-                    });
-                }
+                await deleteDogFROMRemote(dog.id);
             }}
             onVariantAdd={type === 'variant' ? null : onOpen}
         />
 
         <AddVariant
-            name={dog.id.split('_')[1]}
+            name={familyName}
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             onClose={onClose}

@@ -1,3 +1,5 @@
+import failedToast from '@/app/(components)/notifications/failed-toast';
+import successToast from '@/app/(components)/notifications/success-toast';
 import createData from '@/app/actions/dogs-api/create-data';
 import deleteData from '@/app/actions/dogs-api/delete-data';
 import fetchData from '@/app/actions/dogs-api/read-data'
@@ -62,8 +64,10 @@ export const useDogStore = create<State & Action>((set, get) => ({
             if(response) {
                 const { addDog } = get()
                 addDog(response)
+                successToast(`Added ${name}`)
                 return true
             } else {
+                failedToast()
                 return false
             }
         },
@@ -71,9 +75,11 @@ export const useDogStore = create<State & Action>((set, get) => ({
             const response = await addVariantData(name, variant);
             if(response) {
                 const { updateDog } = get()
-                updateDog(response)
+                updateDog(response);
+                successToast(`Added ${variant} ${name}`)
                 return true;
             }
+            failedToast()
             return false
         },
         deleteDogFROMRemote: async (id: string) => {
@@ -81,12 +87,15 @@ export const useDogStore = create<State & Action>((set, get) => ({
             if(splitted.length === 2) {
                 const name = splitted[1]
                 const variant = splitted[0]
+                console.log(`${name} - ${variant}`)
                 const response: Dog = await deleteVariantData(name, variant);
                 if(response) {
                     const {updateDog} = get()
                     updateDog(response)
+                    successToast(`${variant} ${name} is purged from database `)
                     return true;
                 } else {
+                    failedToast()
                     return false;
                 }
             } else {
@@ -94,9 +103,10 @@ export const useDogStore = create<State & Action>((set, get) => ({
                 if(response) {
                     const { deleteDog } = get()
                     deleteDog(id);
+                    successToast(`${id} is purged from database`)
                     return true;
                 } else {
-                    console.log("Here");
+                    failedToast()
                     return false;
                 }
             }

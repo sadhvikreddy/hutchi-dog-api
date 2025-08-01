@@ -1,6 +1,6 @@
 "use client"
 import { Drawer, DrawerBody, DrawerContent, DrawerHeader } from "@heroui/drawer";
-import { useDisclosure, Input, addToast, Form } from "@heroui/react";
+import { useDisclosure, Input, addToast, Form, Card } from "@heroui/react";
 import { useState } from "react";
 import { useDogStore } from "@/store/dogStore";
 import PrimaryButton from "../../buttons/primary-button";
@@ -23,22 +23,7 @@ export default function AddBreed() {
     const onSubmit = async (e) => {
         e.preventDefault();
         if (breedName.length > 0) {
-            const added = await addDogToRemote(breedName, variants);
-            if (added) {
-                addToast({
-                    title: "BOW! That Worked!",
-                    description: `Added ${breedName} to the JSON.`,
-                    color: 'success',
-
-                });
-                onClose()
-            } else {
-                addToast({
-                    title: "Oops, something failed while saving.",
-                    description: ` Please try again`,
-                    color: 'danger',
-                });
-            }
+            await addDogToRemote(breedName, variants);
         }
     }
 
@@ -90,8 +75,10 @@ export default function AddBreed() {
                                         }} />
                                     </div>
 
-                                    <div>
-                                        {variants.map((v) => <DogCard key={v} ><ListItemUI onVariantAdd={null} name={v} onDelete={(e) => setVariants(prevState => removeElementFromArray(prevState, v))} /></DogCard>)}
+                                    <div className="gap-y-2 py-5">
+                                        {variants.map((v) => <Card key={v} className="p-2 my-2" shadow="sm" radius="sm">
+                                            <ListItemUI onVariantAdd={null} name={v} onDelete={(e) => setVariants(prevState => removeElementFromArray(prevState, v))} />
+                                        </Card>)}
                                     </div>
                                 </div>
                                 }
