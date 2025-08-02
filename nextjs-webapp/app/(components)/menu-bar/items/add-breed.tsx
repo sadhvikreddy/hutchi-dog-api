@@ -1,15 +1,14 @@
 "use client"
 import { Drawer, DrawerBody, DrawerContent, DrawerHeader } from "@heroui/drawer";
 import { useDisclosure, Input, addToast, Form, Card } from "@heroui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDogStore } from "@/store/dogStore";
 import PrimaryButton from "../../buttons/primary-button";
 import CloseButton from "../../buttons/close-button";
 import SecondaryButton from "../../buttons/secondary-button";
 import SubmitButton from "../../buttons/submit-button";
 import ResetButton from "../../buttons/reset-button";
-import DogCard from "../../hero/dog-card";
-import { ListItemUI } from "../../hero/listItem";
+import { ListItemUI } from "../../hero/list-Item";
 import { removeElementFromArray } from "@/app/utils/removeElementsFromArray";
 
 export default function AddBreed() {
@@ -17,14 +16,45 @@ export default function AddBreed() {
     const [breedName, setBreedName] = useState('');
     const [variants, setVariants] = useState<string[]>([]);
     const [currentVariant, setCurrentVariant] = useState('');
+    const [isFormValid, setIsFormValid] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (breedName.length > 0) {
+            setIsFormValid(true)
+            if (variants.length > 0) {
+                const vEmptyString = variants.find(e => e.length === 0)
+
+                if (vEmptyString) {
+                    setIsFormValid(false)
+                } else {
+                    setIsFormValid(true)
+                }
+            }
+        } else {
+            setIsFormValid(false)
+        }
+    }, [breedName, variants])
+
+    useEffect(() => {
+        onReset()
+    }, [])
 
     const { addDogToRemote } = useDogStore();
+
+    const onReset = () => {
+        setBreedName('')
+        setVariants([])
+        setCurrentVariant('')
+        setIsFormValid(false)
+    }
 
     const onSubmit = async (e) => {
         e.preventDefault();
         if (breedName.length > 0) {
             await addDogToRemote(breedName, variants);
         }
+
+        onClose()
     }
 
     return (
@@ -47,15 +77,14 @@ export default function AddBreed() {
                     </DrawerHeader>
                     <DrawerBody>
                         <Form
-                            onSubmit={onSubmit} onReset={() => {
-                                setBreedName('');
-                                setCurrentVariant('');
-                                setVariants([])
-                            }}>
+                            onSubmit={onSubmit} onReset={onReset}
+                        >
                             <div className="flex flex-col justify-center w-full gap-y-4">
                                 <Input
                                     className="h-20"
-                                    onChange={(e) => setBreedName(e.target.value)}
+                                    onChange={(e) => {
+                                        setBreedName(e.target.value)
+                                    }}
                                     placeholder="Enter name of the breed, eg: pug, beagle, doberman"
                                     validate={(value) => value.length > 0 ? true : "Enter something here.."}
                                 />
@@ -70,8 +99,10 @@ export default function AddBreed() {
                                             value={currentVariant}
                                         />
                                         <SecondaryButton tooltip="Add variant" onPress={() => {
-                                            setVariants((prevState) => [...prevState, currentVariant])
-                                            setCurrentVariant('')
+                                            if (currentVariant.length > 0) {
+                                                setVariants((prevState) => [...prevState, currentVariant])
+                                                setCurrentVariant('')
+                                            }
                                         }} />
                                     </div>
 
@@ -87,6 +118,7 @@ export default function AddBreed() {
                                         className="flex-3/4"
                                         tooltipText="Persists changes in the database"
                                         label="Confirm"
+                                        isDisabled={!isFormValid}
                                     />
                                     <ResetButton
                                         className="flex-1/4"

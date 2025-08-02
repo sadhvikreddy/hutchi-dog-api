@@ -3,7 +3,7 @@ import PrimaryButton from "../buttons/primary-button";
 import { useState } from "react";
 import { useDogStore } from "@/store/dogStore";
 
-export default function AddVariant({name, isOpen, onOpenChange, onClose}:{name: string, isOpen: boolean, onOpenChange: () => void, onClose: () => void}) {
+export default function AddVariant({ name, isOpen, onOpenChange, onClose }: { name: string, isOpen: boolean, onOpenChange: () => void, onClose: () => void }) {
     const [variant, setVariant] = useState("")
     const { updateDogWithVariant } = useDogStore()
 
@@ -22,7 +22,7 @@ export default function AddVariant({name, isOpen, onOpenChange, onClose}:{name: 
                     <div className="h2" />
                     <PrimaryButton
                         onPress={async () => {
-                            if(name === undefined || variant === undefined) {
+                            if (name === undefined || variant === undefined || variant.length === 0) {
                                 return
                             }
                             await updateDogWithVariant(name, variant);

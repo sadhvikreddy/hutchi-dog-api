@@ -14,6 +14,7 @@ export default function CloseButton({ onPress }: CloseButtonProps) {
                 onPress={onPress}
                 radius="sm"
                 isIconOnly
+                className="m-2"
             >
                 <X />
             </Button>
