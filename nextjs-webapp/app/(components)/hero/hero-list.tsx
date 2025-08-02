@@ -10,13 +10,14 @@ import ParentDogCard from "./parent-dog-card";
 
 export default function HeroList({ dogs }: { dogs: Dog[] }) {
   if(dogs.length === 0) {
-    return <>No Results</>
+    return <><div className="p-5 text-center">No Results</div></>
   }
 
   return <AnimatePresence>
     {dogs.map((entry: Dog, index) => {
       const delay = lesserOf((0.01 + (index / 10)), 0.30)
       if (entry.variants.length === 0) {
+        console.log(`w:${entry.id}`);
         return (
           <AnimationWrapper
             delay={delay}
@@ -30,6 +31,7 @@ export default function HeroList({ dogs }: { dogs: Dog[] }) {
         )
       }
       else {
+        console.log(`pdc:${entry.id}`);
         return (
           <ParentDogCard
             key={`pdc:${entry.id}`} dog={entry} delay={delay} />
