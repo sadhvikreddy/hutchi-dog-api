@@ -1,6 +1,12 @@
 {
     "scripts": {
         "docker:build": "docker build -t hutchi-dog-server .",
-        "start:server": "docker run -p 9999:9999 hutchi-dog-server"
+        "start:docker:server": "docker run -p 9999:9999 hutchi-dog-server",
+        "start:server": "cd backend && npm run start:dev",
+        "start:website": "cd nextjs-webapp && npm run dev",
+        "start:dev": "concurrently 'npm run start:server' 'npm run start:website'"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.0"
     }
 }
