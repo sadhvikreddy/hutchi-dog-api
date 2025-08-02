@@ -15,10 +15,10 @@ type State = {
 type Action = {
     populate: () => Promise<void>
     toJson: () => string
-    fromJson: (json: Record<string, string[]>) => void
     addDog: (dog: Dog) => void
     deleteDog: (id: string) => void
     updateDog: (Dog: Dog) => void
+    searchDogs: (searchTerm: string) => Dog[]
 
     addDogToRemote: (name: string, variants?: string[]) => Promise<boolean>
     updateDogWithVariant: (name: string, variant: string) => Promise<boolean>
@@ -35,8 +35,28 @@ export const useDogStore = create<State & Action>((set, get) => ({
             const { dogs } = get()
             return JSON.stringify(dogToJson(dogs), undefined, 2);
         },
-        fromJson: (json: Record<string, string[]>) => {
-            
+        searchDogs(searchTerm: string): Dog[] {
+            const { dogs } = get();
+
+            const foundTerms:Dog[] = []
+
+            dogs.forEach(dog => {
+                const {name, variants} = dog;
+
+                if(name.toLowerCase().match(searchTerm.toLowerCase())) {
+                    foundTerms.push(dog)
+                    return;
+                }
+
+                variants.forEach(v => {
+                    if(v.toLowerCase().match(searchTerm.toLowerCase())) {
+                        foundTerms.push(dog)
+                        return;
+                    }
+                })
+            })
+
+            return foundTerms.filter(te => te !== undefined || te !== null);
         },
         addDog: (dog: Dog) => {
             const { dogs: oldDogs } = get() 
