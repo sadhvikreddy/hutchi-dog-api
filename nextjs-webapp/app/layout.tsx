@@ -56,10 +56,9 @@ export default function RootLayout({
                 height={300}
               />
               <Image
-              className="fixed -bottom-20 left-0 opacity-5"
+              className="fixed -bottom-20 left-0 opacity-5 object-contain"
               src={'/backgrounds/beagle.png'}
               alt="beagle background"
-              objectFit="cover"
               width={300}
               height={300}
               
