@@ -1,6 +1,6 @@
 import failedToast from '@/app/(components)/notifications/failed-toast';
 import successToast from '@/app/(components)/notifications/success-toast';
-import createData from '@/app/actions/dogs-api/create-data';
+import { createData, updateByJson } from '@/app/actions/dogs-api/create-data';
 import deleteData from '@/app/actions/dogs-api/delete-data';
 import fetchData from '@/app/actions/dogs-api/read-data'
 import { addVariantData, deleteVariantData } from '@/app/actions/dogs-api/update-data';
@@ -23,120 +23,133 @@ type Action = {
     addDogToRemote: (name: string, variants?: string[]) => Promise<boolean>
     updateDogWithVariant: (name: string, variant: string) => Promise<boolean>
     deleteDogFROMRemote: (name: string) => Promise<boolean>
+    saveByJson: (json: string) => Promise<boolean>
 }
 
 export const useDogStore = create<State & Action>((set, get) => ({
-        dogs: [],
-        populate: async () => {
-            const fromServer = await fetchData()
-            set({dogs: fromServer })
-        },
-        toJson: () => {
-            const { dogs } = get()
-            return JSON.stringify(dogToJson(dogs), undefined, 2);
-        },
-        searchDogs(searchTerm: string): Dog[] {
-            const { dogs } = get();
+    dogs: [],
+    populate: async () => {
+        const fromServer = await fetchData()
+        set({ dogs: fromServer })
+    },
+    toJson: () => {
+        const { dogs } = get()
+        return JSON.stringify(dogToJson(dogs), undefined, 2);
+    },
+    searchDogs(searchTerm: string): Dog[] {
+        const { dogs } = get();
 
-            const foundTerms:Dog[] = []
+        const foundTerms: Dog[] = []
 
-            dogs.forEach(dog => {
-                const {name, variants} = dog;
-                const nameCleanedup = name.replaceAll(" ", '')
+        dogs.forEach(dog => {
+            const { name, variants } = dog;
+            const nameCleanedup = name.replaceAll(" ", '')
 
-                if(nameCleanedup.toLowerCase().match(searchTerm.toLowerCase())) {
-                    foundTerms.push(dog)
-                    return;
-                }
-
-                variants.forEach(v => {
-                    if(v.toLowerCase().match(searchTerm.toLowerCase())) {
-                        // not nice way of doing this
-                        // Need to create utility function to handle this.
-                        foundTerms.push({
-                            id:`${v}_${name}`,
-                            name: `${v} ${name}`,
-                            created_at: dog.created_at,
-                            updated_at: dog.updated_at,
-                            variants: []
-                        })
-                    }
-                })
-            })
-
-            return foundTerms.filter(te => te !== undefined || te !== null);
-        },
-        addDog: (dog: Dog) => {
-            const { dogs: oldDogs } = get() 
-            const dogs = [dog, ...oldDogs]
-            set({ dogs })
-        },
-        deleteDog: (id: string) => {
-            const { dogs } = get()
-            const thisItem = dogs.filter(dog => dog.id !== id);
-            set({ dogs: thisItem })
-        },
-        updateDog:(dog: Dog) => {
-            const { dogs } = get()
-            const updatedDogs = dogs.map((d) => {
-                if(d.id === dog.id) {
-                    return dog
-                }
-                return d;
-            })
-
-            set({ dogs: updatedDogs });
-        },
-        addDogToRemote: async (name: string, variants?: string[]) => {
-            const response: Dog = await createData(name, variants);
-            if(response) {
-                const { addDog } = get()
-                addDog(response)
-                successToast(`Added ${name}`)
-                return true
-            } else {
-                failedToast()
-                return false
+            if (nameCleanedup.toLowerCase().match(searchTerm.toLowerCase())) {
+                foundTerms.push(dog)
+                return;
             }
-        },
-        updateDogWithVariant: async (name: string, variant: string) => {
-            const response = await addVariantData(name, variant);
-            if(response) {
-                const { updateDog } = get()
-                updateDog(response);
-                successToast(`Added ${variant} ${name}`)
-                return true;
+
+            variants.forEach(v => {
+                if (v.toLowerCase().match(searchTerm.toLowerCase())) {
+                    // not nice way of doing this
+                    // Need to create utility function to handle this.
+                    foundTerms.push({
+                        id: `${v}_${name}`,
+                        name: `${v} ${name}`,
+                        created_at: dog.created_at,
+                        updated_at: dog.updated_at,
+                        variants: []
+                    })
+                }
+            })
+        })
+
+        return foundTerms.filter(te => te !== undefined || te !== null);
+    },
+    addDog: (dog: Dog) => {
+        const { dogs: oldDogs } = get()
+        const dogs = [dog, ...oldDogs]
+        set({ dogs })
+    },
+    deleteDog: (id: string) => {
+        const { dogs } = get()
+        const thisItem = dogs.filter(dog => dog.id !== id);
+        set({ dogs: thisItem })
+    },
+    updateDog: (dog: Dog) => {
+        const { dogs } = get()
+        const updatedDogs = dogs.map((d) => {
+            if (d.id === dog.id) {
+                return dog
             }
+            return d;
+        })
+
+        set({ dogs: updatedDogs });
+    },
+    addDogToRemote: async (name: string, variants?: string[]) => {
+        const response: Dog = await createData(name, variants);
+        if (response) {
+            const { addDog } = get()
+            addDog(response)
+            successToast(`Added ${name}`)
+            return true
+        } else {
             failedToast()
             return false
-        },
-        deleteDogFROMRemote: async (id: string) => {
-            const splitted = id.split('_');
-            if(splitted.length === 2) {
-                const name = splitted[1]
-                const variant = splitted[0]
-                const response: Dog = await deleteVariantData(name, variant);
-                if(response) {
-                    const {updateDog} = get()
-                    updateDog(response)
-                    successToast(`${variant} ${name} is purged from database `)
-                    return true;
-                } else {
-                    failedToast()
-                    return false;
-                }
+        }
+    },
+    updateDogWithVariant: async (name: string, variant: string) => {
+        const response = await addVariantData(name, variant);
+        if (response) {
+            const { updateDog } = get()
+            updateDog(response);
+            successToast(`Added ${variant} ${name}`)
+            return true;
+        }
+        failedToast()
+        return false
+    },
+    deleteDogFROMRemote: async (id: string) => {
+        const splitted = id.split('_');
+        if (splitted.length === 2) {
+            const name = splitted[1]
+            const variant = splitted[0]
+            const response: Dog = await deleteVariantData(name, variant);
+            if (response) {
+                const { updateDog } = get()
+                updateDog(response)
+                successToast(`${variant} ${name} is purged from database `)
+                return true;
             } else {
-                const response: boolean = await deleteData(id);
-                if(response) {
-                    const { deleteDog } = get()
-                    deleteDog(id);
-                    successToast(`${id} is purged from database`)
-                    return true;
-                } else {
-                    failedToast()
-                    return false;
-                }
+                failedToast()
+                return false;
             }
-        },
-    })
+        } else {
+            const response: boolean = await deleteData(id);
+            if (response) {
+                const { deleteDog } = get()
+                deleteDog(id);
+                successToast(`${id} is purged from database`)
+                return true;
+            } else {
+                failedToast()
+                return false;
+            }
+        }
+    },
+    saveByJson: async (json: string) => {
+        const { populate } = get()
+        const response = await updateByJson(json);
+        if (response) {
+            await populate();
+            successToast("Success")
+            return true
+        } else {
+            failedToast()
+            return false
+        }
+    }
+})
 )

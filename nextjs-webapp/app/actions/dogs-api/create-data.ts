@@ -1,6 +1,6 @@
 "use server"
 
-export default async function createData(name: string, variants?: string[]) {
+export async function createData(name: string, variants?: string[]) {
     const b = {
         'variants': variants ?? []
     }
@@ -13,5 +13,19 @@ export default async function createData(name: string, variants?: string[]) {
             "Content-Type": "application/json"
         }
     })
+    return req.json();
+}
+
+export async function updateByJson(json: string) {
+    const uri = `${process.env.ENDPOINT}/json?reset=true`
+
+    const req = await fetch(uri, {
+        method: "POST",
+        body: json,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
     return req.json();
 }
