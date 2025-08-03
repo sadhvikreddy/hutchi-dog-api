@@ -4,12 +4,9 @@ import Dog from "@/models/dog";
 import { capitalizeFirstLetter } from "@/app/utils/capitalizeFirstLetter";
 import DeleteButton from "../buttons/delete-button";
 import { useDogStore } from "@/store/dogStore";
-import { addToast } from "@heroui/toast";
 import SecondaryButton from "../buttons/secondary-button";
 import { useDisclosure } from "@heroui/react";
 import AddVariant from "./add-variant";
-import successToast from "../notifications/success-toast";
-import failedToast from "../notifications/failed-toast";
 
 
 export function ListItem({ dog, type }: { dog: Dog, type?: "variant" }) {
@@ -18,13 +15,15 @@ export function ListItem({ dog, type }: { dog: Dog, type?: "variant" }) {
 
     const familyName = dog.id.split('_').length === 1 ? dog.id : dog.id.split('_')[1]
 
+    const showVariantAdd = type === 'variant' 
+
     return <>
         <ListItemUI
             name={dog.name}
             onDelete={async () => {
                 await deleteDogFROMRemote(dog.id);
             }}
-            onVariantAdd={type === 'variant' ? null : onOpen}
+            onVariantAdd={showVariantAdd ? null : onOpen}
         />
 
         <AddVariant

@@ -64,7 +64,7 @@ export default function RootLayout({
               
               />
                 <Image
-              className="fixed top-5 left-5"
+              className="fixed top-5 left-5 z-50"
               src={'/logo/logo.png'}
               alt="beagle background"
               width={50}

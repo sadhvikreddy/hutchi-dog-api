@@ -29,7 +29,7 @@ export default function ListWrapper() {
         } else {
             setSearchTerms([])
         }
-        
+
     }, [search])
 
 

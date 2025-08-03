@@ -1,10 +1,10 @@
 "use client"
 
 import { Divider } from "@heroui/react";
-import AddBreed from "./items/add-breed";
+import AddBreedButton from "./items/add-breed-button";
 import DownloadFileButton from "./items/download-file-button";
-import JSONViewerButton from "./items/json-viewer";
-import JSONEditorButton from "./items/json-editor";
+import JSONViewerButton from "./items/json-viewer-button";
+import JSONEditorButton from "./items/json-editor-button";
 
 export default function Menubar() {
 
@@ -14,7 +14,7 @@ export default function Menubar() {
         <>
             <div className="flex flex-col gap-2 justify-self-center">
                 <div className="flex flex-col md:grid md:grid-cols-2 gap-5">
-                    <AddBreed />
+                    <AddBreedButton />
                     <DownloadFileButton />
                     <JSONViewerButton />
                     <JSONEditorButton />

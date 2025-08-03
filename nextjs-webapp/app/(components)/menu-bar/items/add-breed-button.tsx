@@ -11,7 +11,7 @@ import ResetButton from "../../buttons/reset-button";
 import { ListItemUI } from "../../hero/list-Item";
 import { removeElementFromArray } from "@/app/utils/removeElementsFromArray";
 
-export default function AddBreed() {
+export default function AddBreedButton() {
     const { isOpen: isABDOpen, onOpen: onABDOpen, onOpenChange: onABDOpenChange, onClose } = useDisclosure();
     const [breedName, setBreedName] = useState('');
     const [variants, setVariants] = useState<string[]>([]);
