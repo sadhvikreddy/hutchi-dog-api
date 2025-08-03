@@ -4,6 +4,7 @@
         "start:docker:server": "docker run -p 9999:9999 hutchi-dog-server",
         "start:server": "cd backend && npm run start:dev",
         "start:website": "cd nextjs-webapp && npm run dev",
+        "install:all": "concurrently 'npm install' 'cd backend && npm install' 'cd nextjs-app && npm install'",
         "start:dev": "concurrently 'npm run start:server' 'npm run start:website'"
     },
     "devDependencies": {
