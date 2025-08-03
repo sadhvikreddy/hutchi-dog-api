@@ -1,8 +1,8 @@
 import Controller from "@/infra/controller";
 import { RequestPayload } from "@/application/data/interfaces/core/RequestPayload";
 import { jsonize } from "@/main/utils/jsonize";
-import { Request, Response, NextFunction, response } from "express";
-import BaseError from "@/application/data/errors/baseError";
+import { Request, Response, NextFunction } from "express";
+import BaseError from "@/application/data/errors/BaseError";
 
 export const restAPIAdapter = <T>(controller: Controller<T>): (req: Request, res: Response, next: NextFunction) => Promise<any> => {
     return async (req: Request, res: Response, next: NextFunction) => {

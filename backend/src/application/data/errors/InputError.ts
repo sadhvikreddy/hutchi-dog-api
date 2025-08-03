@@ -1,4 +1,4 @@
-import BaseError from "./baseError";
+import BaseError from "./BaseError";
 
 export default class InputError extends BaseError {
     static statusCode = 400

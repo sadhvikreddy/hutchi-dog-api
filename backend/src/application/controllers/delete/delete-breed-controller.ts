@@ -2,7 +2,7 @@ import Controller from "@/infra/controller";
 import { DeleteBreedRepository } from "@/application/data/contracts/delete/delete-breed-repository";
 import { RequestPayload } from "@/application/data/interfaces/core/RequestPayload";
 import z from "zod";
-import InputError from "@/application/data/errors/inputError";
+import InputError from "@/application/data/errors/InputError";
 
 export class DeleteBreedController extends Controller<string> {
     constructor(

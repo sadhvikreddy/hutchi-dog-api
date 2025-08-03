@@ -14,7 +14,7 @@ describe("Dog to Json", () => {
         variants: ["2.1", "2.2"] 
     }];
 
-    expect(dogToJson(input)).toBe({
+    expect(dogToJson(input)).toStrictEqual({
         "one": [],
         "two": ["2.1", "2.2"]
     })

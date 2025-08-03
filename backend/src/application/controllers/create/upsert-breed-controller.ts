@@ -5,7 +5,7 @@ import z from "zod";
 import { parseArray } from "@/main/utils/parseArray";
 import { cleanTheString } from "@/main/utils/cleanTheString";
 import { UpsertBreedRequestInput, upsertBreedRequestInputSchema } from "@/application/data/requests/upsert-breed-request-input";
-import InputError from "@/application/data/errors/inputError";
+import InputError from "@/application/data/errors/InputError";
 import InternalError from "@/application/data/errors/InternalError";
 
 export default class UpsertBreedController extends Controller<UpsertBreedRequestInput> {

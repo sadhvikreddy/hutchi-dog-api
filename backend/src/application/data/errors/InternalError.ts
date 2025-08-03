@@ -1,4 +1,4 @@
-import BaseError from "./baseError"
+import BaseError from "./BaseError"
 
 export default class InternalError extends BaseError {
     static statusCode = 500

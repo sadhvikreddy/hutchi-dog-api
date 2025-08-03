@@ -3,7 +3,7 @@ import { DeleteVariantRepository } from "@/application/data/contracts/delete/del
 import { RequestPayload } from "@/application/data/interfaces/core/RequestPayload";
 import z from "zod";
 import { CreateAndDeleteVariantRequestInput, createAndDeleteVariantRequestInputSchema } from "@/application/data/requests/create-variant-request-input";
-import InputError from "@/application/data/errors/inputError";
+import InputError from "@/application/data/errors/InputError";
 import InternalError from "@/application/data/errors/InternalError";
 
 export default class DeleteVariantController extends Controller<CreateAndDeleteVariantRequestInput> {
@@ -21,9 +21,9 @@ export default class DeleteVariantController extends Controller<CreateAndDeleteV
     }
 
     buildValidator(payload: RequestPayload): CreateAndDeleteVariantRequestInput {
-                let params = payload.params;
+        let params = payload.params;
 
-        if(params.variant === ':variant') {
+        if (params.variant === ':variant') {
             throw new InputError('variant params is missing (:variant)')
         }
 

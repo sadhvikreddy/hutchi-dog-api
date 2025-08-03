@@ -2,7 +2,7 @@ import Controller from "@/infra/controller";
 import ReadOneRepository from "@/application/data/contracts/read/read-one-repository";
 import { RequestPayload } from "@/application/data/interfaces/core/RequestPayload";
 import z from "zod";
-import InputError from "@/application/data/errors/inputError";
+import InputError from "@/application/data/errors/InputError";
 import InternalError from "@/application/data/errors/InternalError";
 
 export default class ReadOneController extends Controller<string> {
@@ -19,7 +19,7 @@ export default class ReadOneController extends Controller<string> {
     buildValidator(payload: RequestPayload): string {
         let { name } = payload.params;
 
-        if(name === ':name') {
+        if (name === ':name') {
             throw new InputError('Name parameter is missing')
         }
 

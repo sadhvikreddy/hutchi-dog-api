@@ -1,4 +1,4 @@
-import BaseError from "./baseError";
+import BaseError from "./BaseError";
 
 export default class JSONValidationError extends BaseError {
     static statusCode = 400

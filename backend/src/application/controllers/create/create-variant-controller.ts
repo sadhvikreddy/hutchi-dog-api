@@ -4,7 +4,7 @@ import { RequestPayload } from "@/application/data/interfaces/core/RequestPayloa
 import z from "zod";
 import { CreateAndDeleteVariantRequestInput, createAndDeleteVariantRequestInputSchema } from "@/application/data/requests/create-variant-request-input";
 import { cleanTheString } from "@/main/utils/cleanTheString";
-import InputError from "@/application/data/errors/inputError";
+import InputError from "@/application/data/errors/InputError";
 import InternalError from "@/application/data/errors/InternalError";
 
 export default class CreateVariantController extends Controller<CreateAndDeleteVariantRequestInput> {
@@ -23,8 +23,8 @@ export default class CreateVariantController extends Controller<CreateAndDeleteV
     buildValidator(payload: RequestPayload): CreateAndDeleteVariantRequestInput {
         let params = payload.params;
 
-        if(params.variant === ':variant') {
-           throw new InputError('parameter Variant is missing')
+        if (params.variant === ':variant') {
+            throw new InputError('parameter Variant is missing')
         }
 
         try {
