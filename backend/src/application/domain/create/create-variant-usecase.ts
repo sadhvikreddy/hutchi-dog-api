@@ -8,7 +8,7 @@ export default class CreateVariantUsecase implements CreateVariantRepository {
     ) {}
 
     async execute(name: string, variant: string): Promise<Dog | null> {
-        const existingRecord = await this.database.readOne(name);
+        const existingRecord = await this.database.readOne(name.toLowerCase());
 
         const variants = existingRecord?.variants ?? []
         if(!variants.includes(variant)) {

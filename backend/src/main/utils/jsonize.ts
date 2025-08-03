@@ -1,3 +1,5 @@
+import JSONValidationError from "@/application/data/errors/JSONValidationError"
+
 export function jsonize(protoObject: Object) {
     if(protoObject === undefined || protoObject === null) {
         return {}
@@ -5,6 +7,7 @@ export function jsonize(protoObject: Object) {
     try {
         return JSON.parse(JSON.stringify(protoObject))
     } catch(error) {
-        throw new Error("Not Valid Json")
+        console.log(`error: ${error}`);
+        throw new JSONValidationError()
     }
 }

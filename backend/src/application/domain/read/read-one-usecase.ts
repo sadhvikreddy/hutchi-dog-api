@@ -8,6 +8,6 @@ export default class ReadOneUsecase implements ReadOneRepository {
     ) {}
 
     async execute(name: string): Promise<Dog | null> {
-        return await this.database.readOne(name);
+        return await this.database.readOne(name.toLowerCase());
     }
 }

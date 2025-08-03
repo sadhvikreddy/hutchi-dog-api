@@ -7,6 +7,5 @@ import { CreateManyByJsonRequestInput } from "@/application/data/requests/create
 export function createManyByJsonRouter() {
     const usecase = new CreateManyByJSONUsecase(dogDatabaseFactory());
     const controller = new CreateManyByJsonController(usecase);
-
     return restAPIAdapter<CreateManyByJsonRequestInput>(controller);
 }

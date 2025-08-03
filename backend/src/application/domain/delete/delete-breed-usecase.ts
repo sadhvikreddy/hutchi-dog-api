@@ -8,6 +8,6 @@ export default class DeleteBreedUsecase implements DeleteBreedRepository {
     ) {}
 
     async execute(name: string): Promise<boolean> {
-        return await this.database.deleteOne(name);
+        return await this.database.deleteOne(name.toLowerCase());
     }
 }

@@ -13,7 +13,6 @@ export default class DatabaseAdapter<T extends BaseDocument> {
 
     // add values
     async upsert(id: string, data: Partial<T>): Promise<T | null> {
-        id = id.toLowerCase();
         const document = await this.collection.doc(id).get();
         const oneRecord = document.data()
         let result;

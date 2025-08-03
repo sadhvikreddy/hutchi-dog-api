@@ -14,7 +14,7 @@ export default class CreateManyByJSONUsecase implements CreateManyByJSONReposito
 
         const dogs: Dog[] = keys.map(key => {
             const dog: Dog = {
-                id: cleanTheString(key),
+                id: cleanTheString(key).toLowerCase(),
                 name: cleanTheString(key),
                 variants: parseArray(json[key]) ?? [] 
             }

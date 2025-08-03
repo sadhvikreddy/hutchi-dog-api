@@ -12,6 +12,7 @@ export default class UpsertBreedUsecase implements UpsertBreedRepository {
             name,
             variants: variants ?? []
         }
-        return await this.database.upsert(name, data);
+        const id = name.toLowerCase();
+        return await this.database.upsert(id, data);
     }
 }

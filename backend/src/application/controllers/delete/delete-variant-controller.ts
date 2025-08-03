@@ -3,6 +3,8 @@ import { DeleteVariantRepository } from "@/application/data/contracts/delete/del
 import { RequestPayload } from "@/application/data/interfaces/core/RequestPayload";
 import z from "zod";
 import { CreateAndDeleteVariantRequestInput, createAndDeleteVariantRequestInputSchema } from "@/application/data/requests/create-variant-request-input";
+import InputError from "@/application/data/errors/inputError";
+import InternalError from "@/application/data/errors/InternalError";
 
 export default class DeleteVariantController extends Controller<CreateAndDeleteVariantRequestInput> {
     constructor(
@@ -22,18 +24,17 @@ export default class DeleteVariantController extends Controller<CreateAndDeleteV
                 let params = payload.params;
 
         if(params.variant === ':variant') {
-            // throw 400 bad request
-            throw new Error("Variant not provided.")
+            throw new InputError('variant params is missing (:variant)')
         }
 
         try {
             params = createAndDeleteVariantRequestInputSchema.parse(params);
         } catch (error) {
             if (error instanceof z.ZodError) {
-                // throw 400 bad request
+                throw new InputError(error.message)
             }
 
-            // throw 500 internal server error
+            throw new InternalError(JSON.stringify(error));
         }
 
         return params;

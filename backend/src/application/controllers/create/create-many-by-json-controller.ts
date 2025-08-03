@@ -3,6 +3,7 @@ import CreateManyByJSONRepository from "@/application/data/contracts/create/crea
 import { RequestPayload } from "@/application/data/interfaces/core/RequestPayload";
 import z, { boolean } from "zod";
 import { CreateManyByJsonRequestInput } from "@/application/data/requests/create-many-by-json-request-input";
+import InputError from "@/application/data/errors/inputError";
 
 export default class CreateManyByJsonController extends Controller<CreateManyByJsonRequestInput> {
     constructor(
@@ -21,7 +22,11 @@ export default class CreateManyByJsonController extends Controller<CreateManyByJ
     }
 
     buildValidator(payload: RequestPayload): CreateManyByJsonRequestInput  {
-        const record: Record<string, string[]> = payload.body ?? {}
+        const record: Record<string, string[]> = payload.body;
+
+        if(record === undefined || record === null) {
+            throw new InputError('body is missing')
+        }
         const resetRaw = payload.query.reset ?? false
         const reset = resetRaw === "true" ? true : false;
         return {

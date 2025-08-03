@@ -9,7 +9,7 @@ export default class DeleteVariantUsecase implements DeleteVariantRepository {
     ) {}
 
     async execute(name: string, variant: string): Promise<Dog | null> {
-        const existingRecord = await this.database.readOne(name);
+        const existingRecord = await this.database.readOne(name.toLowerCase());
         if(existingRecord) {
             const variants = existingRecord.variants;
 

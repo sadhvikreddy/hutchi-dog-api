@@ -2,6 +2,7 @@ import Controller from "@/infra/controller";
 import { DeleteBreedRepository } from "@/application/data/contracts/delete/delete-breed-repository";
 import { RequestPayload } from "@/application/data/interfaces/core/RequestPayload";
 import z from "zod";
+import InputError from "@/application/data/errors/inputError";
 
 export class DeleteBreedController extends Controller<string> {
     constructor(
@@ -25,10 +26,10 @@ export class DeleteBreedController extends Controller<string> {
             params = schema.parse(params)
         } catch (error) {
             if (error instanceof z.ZodError) {
-                // throw 400
+                throw new InputError(error.message)
             }
 
-            // throw 500
+            throw new InputError(JSON.stringify(error));
         }
 
         return params.name;

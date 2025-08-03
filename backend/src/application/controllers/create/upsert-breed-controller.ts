@@ -5,6 +5,8 @@ import z from "zod";
 import { parseArray } from "@/main/utils/parseArray";
 import { cleanTheString } from "@/main/utils/cleanTheString";
 import { UpsertBreedRequestInput, upsertBreedRequestInputSchema } from "@/application/data/requests/upsert-breed-request-input";
+import InputError from "@/application/data/errors/inputError";
+import InternalError from "@/application/data/errors/InternalError";
 
 export default class UpsertBreedController extends Controller<UpsertBreedRequestInput> {
     constructor(
@@ -29,11 +31,10 @@ export default class UpsertBreedController extends Controller<UpsertBreedRequest
             toReturn = upsertBreedRequestInputSchema.parse(toReturn);
         } catch (error) {
             if (error instanceof z.ZodError) {
-                // throw 400 with ERROR
-                throw new Error("Zod Error")
+                throw new InputError(error.message)
             }
 
-            // throw 500 internal SERVER ERROR
+            throw new InternalError(JSON.stringify(error))
         }
 
         return toReturn;
