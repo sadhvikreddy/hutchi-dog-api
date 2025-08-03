@@ -5,5 +5,6 @@ export default function failedToast() {
         title: "Oops, something failed while that Operation.",
         description: ` Please try again`,
         color: 'danger',
+        timeout: 2000
     });
 }

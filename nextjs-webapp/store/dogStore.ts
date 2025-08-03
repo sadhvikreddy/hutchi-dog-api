@@ -42,16 +42,24 @@ export const useDogStore = create<State & Action>((set, get) => ({
 
             dogs.forEach(dog => {
                 const {name, variants} = dog;
+                const nameCleanedup = name.replaceAll(" ", '')
 
-                if(name.toLowerCase().match(searchTerm.toLowerCase())) {
+                if(nameCleanedup.toLowerCase().match(searchTerm.toLowerCase())) {
                     foundTerms.push(dog)
                     return;
                 }
 
                 variants.forEach(v => {
                     if(v.toLowerCase().match(searchTerm.toLowerCase())) {
-                        foundTerms.push(dog)
-                        return;
+                        // not nice way of doing this
+                        // Need to create utility function to handle this.
+                        foundTerms.push({
+                            id:`${v}_${name}`,
+                            name: `${v} ${name}`,
+                            created_at: dog.created_at,
+                            updated_at: dog.updated_at,
+                            variants: []
+                        })
                     }
                 })
             })
@@ -107,7 +115,6 @@ export const useDogStore = create<State & Action>((set, get) => ({
             if(splitted.length === 2) {
                 const name = splitted[1]
                 const variant = splitted[0]
-                console.log(`${name} - ${variant}`)
                 const response: Dog = await deleteVariantData(name, variant);
                 if(response) {
                     const {updateDog} = get()

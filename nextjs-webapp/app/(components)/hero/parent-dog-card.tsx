@@ -39,7 +39,6 @@ export default function ParentDogCard({ dog, delay }: { dog: Dog, delay: number 
                             created_at: dog.created_at,
                             updated_at: dog.updated_at
                         }
-                        console.log(`parendfo ${newDog.id}`);
                         return (
                             <DogCard key={newDog.id}>
                                 <ListItem dog={newDog} type="variant" />

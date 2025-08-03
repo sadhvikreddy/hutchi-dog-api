@@ -17,7 +17,6 @@ export default function HeroList({ dogs }: { dogs: Dog[] }) {
     {dogs.map((entry: Dog, index) => {
       const delay = lesserOf((0.01 + (index / 10)), 0.30)
       if (entry.variants.length === 0) {
-        console.log(`w:${entry.id}`);
         return (
           <AnimationWrapper
             delay={delay}
@@ -31,7 +30,6 @@ export default function HeroList({ dogs }: { dogs: Dog[] }) {
         )
       }
       else {
-        console.log(`pdc:${entry.id}`);
         return (
           <ParentDogCard
             key={`pdc:${entry.id}`} dog={entry} delay={delay} />

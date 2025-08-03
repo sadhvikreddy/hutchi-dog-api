@@ -23,12 +23,13 @@ export default function ListWrapper() {
     }, [])
 
     useEffect(() => {
-        if(search.length < 2) {
+        if (search.length >= 2) {
+            const terms = searchDogs(search);
+            setSearchTerms(terms);
+        } else {
             setSearchTerms([])
-            return;
         }
-        const terms = searchDogs(search);
-        setSearchTerms(terms);
+        
     }, [search])
 
 
@@ -42,7 +43,7 @@ export default function ListWrapper() {
         <div className="w-screen md:w-1/2 justify-self-center flex flex-col">
             <div>
                 <div
-                    className=" md:mx-4 my-5"
+                    className="mx-2 md:mx-4 my-5"
                 >
                     <Input
                         className=""
@@ -55,7 +56,7 @@ export default function ListWrapper() {
                 </div>
             </div>
             {
-                (search.length > 2) ?
+                (search.length >= 2) ?
                     <HeroList dogs={searchTerms} />
                     : <HeroList dogs={dogs} />
 

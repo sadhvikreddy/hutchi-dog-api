@@ -5,6 +5,6 @@ export default function successToast(message: string) {
         title: "BOW! That Worked!",
         description: message,
         color: 'success',
-
+        timeout: 2000
     });
 }
