@@ -65,8 +65,8 @@ i have however used chatGPT to generate some quick assets in the frontend.</b>
 1) Clone the Repository
 2) Copy "firebase-auth.json to backend folder (Commiting this key to public repo will make google disable the key)
 3) Copy .env.local to nextjs-webapp folder (Just need ENDPOINT env variable).
-4) npm run install:all
-5) npm run start:dev
+4) FROM root directory: npm run install:dev
+5) FROM root directory: npm run start:dev
 
    For website: http://localhost:8999
    For Server: http://localhost:9999
